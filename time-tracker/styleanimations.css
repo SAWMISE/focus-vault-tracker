@@ -1,0 +1,187 @@
+/* Focus Vault - No Animations Version */
+
+/* Disable all animations and transitions */
+*,
+*::before,
+*::after {
+  animation: none !important;
+  transition: none !important;
+  transform: none !important;
+}
+
+/* Remove animated backgrounds */
+body::before,
+body::after {
+  display: none !important;
+}
+
+/* Remove hexagon animations */
+.hexagon-icon {
+  animation: none !important;
+}
+
+.hexagon-icon::before {
+  animation: none !important;
+}
+
+.header::before {
+  display: none !important;
+}
+
+/* Static button hover effects (just basic color changes) */
+.btn:hover {
+  opacity: 0.9;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Static card hover effects */
+.stat-card:hover {
+  opacity: 0.95;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.time-entry:hover,
+.project-item:hover {
+  background: rgba(212, 175, 55, 0.15);
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Remove timer pulsing */
+.timer-display {
+  animation: none !important;
+  text-shadow: 0 0 30px var(--gold-glow);
+}
+
+/* Remove modal animations */
+.modal {
+  animation: none !important;
+}
+
+.modal-content {
+  animation: none !important;
+}
+
+/* Remove notification animations */
+.notification {
+  animation: none !important;
+}
+
+/* Ensure focus states are still visible but not animated */
+input:focus, 
+select:focus, 
+textarea:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.3);
+  transform: none !important;
+  animation: none !important;
+}
+
+.btn:focus {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+  animation: none !important;
+}
+
+/* Remove loading animations */
+.spinner {
+  animation: none !important;
+  border: 4px solid var(--gold);
+  border-radius: 50%;
+}
+
+/* Static progress bars */
+.progress-fill {
+  transition: none !important;
+}
+
+.progress-fill::after {
+  display: none !important;
+}
+
+/* Remove skeleton loading */
+.skeleton {
+  background: rgba(212, 175, 55, 0.1) !important;
+  animation: none !important;
+}
+
+/* Clean tooltips without animation */
+.tooltip .tooltiptext {
+  visibility: visible !important;
+  opacity: 1 !important;
+  transition: none !important;
+}
+
+/* Static state classes */
+.animate-fade-in,
+.animate-slide-up,
+.animate-bounce,
+.animate-shake,
+.animate-glow,
+.animate-pulse,
+.animate-spin {
+  animation: none !important;
+}
+
+/* Remove staggered animations */
+.stagger-animation > * {
+  animation-delay: 0s !important;
+}
+
+/* Ensure smooth scrolling is also disabled */
+html {
+  scroll-behavior: auto !important;
+}
+
+/* Remove any remaining transform effects */
+.project-item:hover {
+  transform: none !important;
+}
+
+/* Static interactive elements */
+.btn:active {
+  transform: none !important;
+  opacity: 0.8;
+}
+
+/* Remove glass effect movement */
+.auth-section::before,
+.main-app::before {
+  display: none !important;
+}
+
+/* Clean focus indicators */
+button:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+/* Ensure performance by removing any remaining animated properties */
+.timer-running .timer-display,
+.timer-paused .timer-display,
+.timer-stopped .timer-display {
+  animation: none !important;
+}
+
+/* Static success/error states */
+.success-state,
+.error-state {
+  animation: none !important;
+}
+
+/* Clean loading states */
+.loading-container {
+  animation: none !important;
+}
+
+/* Remove all keyframe references (they won't be used anyway) */
+@keyframes none {
+  to { opacity: 1; }
+}

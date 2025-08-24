@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Focus Vault - Time Tracker</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="stylecomponents.css">
+  <link rel="stylesheet" href="styleanimations.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="logo">
+        <h1>Focus Vault</h1>
+      </div>
+      <p class="tagline">Secure your productivity. Track your focus.</p>
+    </div>
+
+    <!-- Authentication Section -->
+    <div id="authSection" class="auth-section">
+      <div id="loginForm">
+        <h2>Access Your Vault</h2>
+        <div class="form-group">
+          <label for="loginEmail">Email Address</label>
+          <input type="email" id="loginEmail" placeholder="Enter your email">
+        </div>
+        <div class="form-group">
+          <label for="loginPassword">Vault Password</label>
+          <input type="password" id="loginPassword" placeholder="Enter your password">
+        </div>
+        <button class="btn" onclick="auth.login()">Enter Vault</button>
+        <button class="btn btn-secondary" onclick="auth.showRegister()">Create New Vault</button>
+      </div>
+
+      <div id="registerForm" class="hidden">
+        <h2>Create Your Vault</h2>
+        <div class="form-group">
+          <label for="registerName">Full Name</label>
+          <input type="text" id="registerName" placeholder="Enter your full name">
+        </div>
+        <div class="form-group">
+          <label for="registerEmail">Email Address</label>
+          <input type="email" id="registerEmail" placeholder="Enter your email">
+        </div>
+        <div class="form-group">
+          <label for="registerPassword">Vault Password</label>
+          <input type="password" id="registerPassword" placeholder="Create a secure password">
+        </div>
+        <button class="btn" onclick="auth.register()">Create Vault</button>
+        <button class="btn btn-secondary" onclick="auth.showLogin()">Back to Login</button>
+      </div>
+    </div>
+
+    <!-- Main Application -->
+    <div id="mainApp" class="main-app hidden">
+      <div class="user-info">
+        <div>
+          <h3>Welcome to your vault, <span id="userName"></span></h3>
+          <p>Your focus fortress awaits your commands</p>
+        </div>
+        <div class="user-actions">
+          <button class="btn" onclick="reports.showReports()">📊 Reports</button>
+          <button class="btn btn-secondary" onclick="auth.logout()">Exit Vault</button>
+        </div>
+      </div>
+
+      <div class="timer-section">
+        <div class="timer-controls">
+          <h3>⏱️ Focus Timer</h3>
+          
+          <div class="form-group">
+            <label for="projectSelect">Select Focus Target</label>
+            <select id="projectSelect">
+              <option value="">Choose your mission...</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="taskDescription">Task Description (Optional)</label>
+            <input type="text" id="taskDescription" placeholder="What are you working on?">
+          </div>
+
+          <div class="timer-display" id="timerDisplay">00:00:00</div>
+
+          <div id="currentSession" class="current-session hidden">
+            <strong>🎯 Active Focus Session</strong>
+            <p>Mission: <span id="currentProject"></span></p>
+            <p>Task: <span id="currentTask"></span></p>
+            <p>Started: <span id="sessionStart"></span></p>
+          </div>
+
+          <div class="timer-buttons">
+            <button class="btn" id="startBtn" onclick="timer.start()">🚀 Begin Focus</button>
+            <button class="btn btn-danger" id="stopBtn" onclick="timer.stop()" disabled>⏹️ End Session</button>
+            <button class="btn btn-secondary" id="pauseBtn" onclick="timer.pause()" disabled>⏸️ Pause</button>
+          </div>
+        </div>
+
+        <div class="project-manager">
+          <h3>📁 Mission Control</h3>
+          
+          <div class="form-group">
+            <label for="newProjectName">Mission Name</label>
+            <input type="text" id="newProjectName" placeholder="Name your focus mission">
+          </div>
+          
+          <div class="form-group">
+            <label for="projectDescription">Mission Brief</label>
+            <input type="text" id="projectDescription" placeholder="Describe your objective">
+          </div>
+
+          <div class="form-group">
+            <label for="projectColor">Mission Color</label>
+            <select id="projectColor">
+              <option value="gold">🟡 Gold</option>
+              <option value="blue">🔵 Blue</option>
+              <option value="green">🟢 Green</option>
+              <option value="purple">🟣 Purple</option>
+              <option value="red">🔴 Red</option>
+              <option value="orange">🟠 Orange</option>
+            </select>
+          </div>
+          
+          <button class="btn" onclick="projects.add()">➕ Add Mission</button>
+
+          <div class="project-list" id="projectList">
+            <!-- Projects will be loaded here -->
+          </div>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card" onclick="reports.showTodayDetails()">
+          <div class="stat-value" id="todayTime">0h</div>
+          <div class="stat-label">Today's Focus</div>
+        </div>
+        <div class="stat-card" onclick="reports.showWeekDetails()">
+          <div class="stat-value" id="weekTime">0h</div>
+          <div class="stat-label">Weekly Progress</div>
+        </div>
+        <div class="stat-card" onclick="projects.showAll()">
+          <div class="stat-value" id="totalProjects">0</div>
+          <div class="stat-label">Active Missions</div>
+        </div>
+        <div class="stat-card" onclick="reports.showAllTime()">
+          <div class="stat-value" id="totalTime">0h</div>
+          <div class="stat-label">Vault Total</div>
+        </div>
+      </div>
+
+      <div class="time-entries">
+        <div class="entries-header">
+          <h3>📈 Focus History</h3>
+          <div class="entry-filters">
+            <select id="projectFilter" onchange="entries.filterByProject()">
+              <option value="">All Missions</option>
+            </select>
+            <select id="dateFilter" onchange="entries.filterByDate()">
+              <option value="all">All Time</option>
+              <option value="today">Today</option>
+              <option value="week">This Week</option>
+              <option value="month">This Month</option>
+            </select>
+          </div>
+        </div>
+        <div id="entriesList">
+          <!-- Time entries will be loaded here -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Reports Modal -->
+    <div id="reportsModal" class="modal hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>📊 Focus Reports</h2>
+          <button class="btn btn-secondary" onclick="reports.close()">✕</button>
+        </div>
+        <div id="reportsContent">
+          <!-- Reports content will be loaded here -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Single Script File -->
+  <script src="script.js"></script>
+</body>
+</html>
