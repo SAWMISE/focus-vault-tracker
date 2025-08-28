@@ -3,52 +3,52 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Focus Vault - Time Tracker</title>
+  <title>Focus Vault - Professional Time Tracker</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="stylecomponents.css">
-  <link rel="stylesheet" href="styleanimations.css">
 </head>
 <body>
   <div class="container">
     <div class="header">
-      <div class="logo">
-        <h1>Focus Vault</h1>
-      </div>
-      <p class="tagline">Secure your productivity. Track your focus.</p>
+      <h1>Focus Vault</h1>
+      <p class="tagline">Professional time tracking and productivity management</p>
     </div>
 
     <!-- Authentication Section -->
     <div id="authSection" class="auth-section">
       <div id="loginForm">
-        <h2>Access Your Vault</h2>
+        <h2>Sign In</h2>
         <div class="form-group">
           <label for="loginEmail">Email Address</label>
-          <input type="email" id="loginEmail" placeholder="Enter your email">
+          <input type="email" id="loginEmail" placeholder="Enter your email address">
         </div>
         <div class="form-group">
-          <label for="loginPassword">Vault Password</label>
+          <label for="loginPassword">Password</label>
           <input type="password" id="loginPassword" placeholder="Enter your password">
         </div>
-        <button class="btn" onclick="auth.login()">Enter Vault</button>
-        <button class="btn btn-secondary" onclick="auth.showRegister()">Create New Vault</button>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem;">
+          <button class="btn btn-primary" onclick="auth.login()">Sign In</button>
+          <button class="btn btn-secondary" onclick="auth.showRegister()">Create Account</button>
+        </div>
       </div>
 
       <div id="registerForm" class="hidden">
-        <h2>Create Your Vault</h2>
+        <h2>Create Account</h2>
         <div class="form-group">
           <label for="registerName">Full Name</label>
           <input type="text" id="registerName" placeholder="Enter your full name">
         </div>
         <div class="form-group">
           <label for="registerEmail">Email Address</label>
-          <input type="email" id="registerEmail" placeholder="Enter your email">
+          <input type="email" id="registerEmail" placeholder="Enter your email address">
         </div>
         <div class="form-group">
-          <label for="registerPassword">Vault Password</label>
+          <label for="registerPassword">Password</label>
           <input type="password" id="registerPassword" placeholder="Create a secure password">
         </div>
-        <button class="btn" onclick="auth.register()">Create Vault</button>
-        <button class="btn btn-secondary" onclick="auth.showLogin()">Back to Login</button>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem;">
+          <button class="btn btn-primary" onclick="auth.register()">Create Account</button>
+          <button class="btn btn-secondary" onclick="auth.showLogin()">Back to Sign In</button>
+        </div>
       </div>
     </div>
 
@@ -56,23 +56,23 @@
     <div id="mainApp" class="main-app hidden">
       <div class="user-info">
         <div>
-          <h3>Welcome to your vault, <span id="userName"></span></h3>
-          <p>Your focus fortress awaits your commands</p>
+          <h3>Welcome, <span id="userName"></span></h3>
+          <p>Track your time and boost productivity</p>
         </div>
         <div class="user-actions">
-          <button class="btn" onclick="reports.showReports()">📊 Reports</button>
-          <button class="btn btn-secondary" onclick="auth.logout()">Exit Vault</button>
+          <button class="btn btn-secondary" onclick="reports.showReports()">View Reports</button>
+          <button class="btn btn-secondary" onclick="auth.logout()">Sign Out</button>
         </div>
       </div>
 
       <div class="timer-section">
         <div class="timer-controls">
-          <h3>⏱️ Focus Timer</h3>
+          <h3>Time Tracker</h3>
           
           <div class="form-group">
-            <label for="projectSelect">Select Focus Target</label>
+            <label for="projectSelect">Project</label>
             <select id="projectSelect">
-              <option value="">Choose your mission...</option>
+              <option value="">Select a project</option>
             </select>
           </div>
 
@@ -84,45 +84,45 @@
           <div class="timer-display" id="timerDisplay">00:00:00</div>
 
           <div id="currentSession" class="current-session hidden">
-            <strong>🎯 Active Focus Session</strong>
-            <p>Mission: <span id="currentProject"></span></p>
+            <strong>Active Session</strong>
+            <p>Project: <span id="currentProject"></span></p>
             <p>Task: <span id="currentTask"></span></p>
             <p>Started: <span id="sessionStart"></span></p>
           </div>
 
           <div class="timer-buttons">
-            <button class="btn" id="startBtn" onclick="timer.start()">🚀 Begin Focus</button>
-            <button class="btn btn-danger" id="stopBtn" onclick="timer.stop()" disabled>⏹️ End Session</button>
-            <button class="btn btn-secondary" id="pauseBtn" onclick="timer.pause()" disabled>⏸️ Pause</button>
+            <button class="btn btn-success" id="startBtn" onclick="timer.start()">Start Timer</button>
+            <button class="btn btn-danger" id="stopBtn" onclick="timer.stop()" disabled>Stop</button>
+            <button class="btn btn-secondary" id="pauseBtn" onclick="timer.pause()" disabled>Pause</button>
           </div>
         </div>
 
         <div class="project-manager">
-          <h3>📁 Mission Control</h3>
+          <h3>Project Management</h3>
           
           <div class="form-group">
-            <label for="newProjectName">Mission Name</label>
-            <input type="text" id="newProjectName" placeholder="Name your focus mission">
+            <label for="newProjectName">Project Name</label>
+            <input type="text" id="newProjectName" placeholder="Enter project name">
           </div>
           
           <div class="form-group">
-            <label for="projectDescription">Mission Brief</label>
-            <input type="text" id="projectDescription" placeholder="Describe your objective">
+            <label for="projectDescription">Description</label>
+            <input type="text" id="projectDescription" placeholder="Project description">
           </div>
 
           <div class="form-group">
-            <label for="projectColor">Mission Color</label>
+            <label for="projectColor">Color</label>
             <select id="projectColor">
-              <option value="gold">🟡 Gold</option>
-              <option value="blue">🔵 Blue</option>
-              <option value="green">🟢 Green</option>
-              <option value="purple">🟣 Purple</option>
-              <option value="red">🔴 Red</option>
-              <option value="orange">🟠 Orange</option>
+              <option value="gold">Gold</option>
+              <option value="blue">Blue</option>
+              <option value="green">Green</option>
+              <option value="purple">Purple</option>
+              <option value="red">Red</option>
+              <option value="orange">Orange</option>
             </select>
           </div>
           
-          <button class="btn" onclick="projects.add()">➕ Add Mission</button>
+          <button class="btn btn-primary" onclick="projects.add()" style="width: 100%; margin-bottom: 1.5rem;">Add Project</button>
 
           <div class="project-list" id="projectList">
             <!-- Projects will be loaded here -->
@@ -133,28 +133,28 @@
       <div class="stats-grid">
         <div class="stat-card" onclick="reports.showTodayDetails()">
           <div class="stat-value" id="todayTime">0h</div>
-          <div class="stat-label">Today's Focus</div>
+          <div class="stat-label">Today's Time</div>
         </div>
         <div class="stat-card" onclick="reports.showWeekDetails()">
           <div class="stat-value" id="weekTime">0h</div>
-          <div class="stat-label">Weekly Progress</div>
+          <div class="stat-label">This Week</div>
         </div>
         <div class="stat-card" onclick="projects.showAll()">
           <div class="stat-value" id="totalProjects">0</div>
-          <div class="stat-label">Active Missions</div>
+          <div class="stat-label">Active Projects</div>
         </div>
         <div class="stat-card" onclick="reports.showAllTime()">
           <div class="stat-value" id="totalTime">0h</div>
-          <div class="stat-label">Vault Total</div>
+          <div class="stat-label">Total Time</div>
         </div>
       </div>
 
       <div class="time-entries">
         <div class="entries-header">
-          <h3>📈 Focus History</h3>
+          <h3>Recent Activity</h3>
           <div class="entry-filters">
             <select id="projectFilter" onchange="entries.filterByProject()">
-              <option value="">All Missions</option>
+              <option value="">All Projects</option>
             </select>
             <select id="dateFilter" onchange="entries.filterByDate()">
               <option value="all">All Time</option>
@@ -174,8 +174,8 @@
     <div id="reportsModal" class="modal hidden">
       <div class="modal-content">
         <div class="modal-header">
-          <h2>📊 Focus Reports</h2>
-          <button class="btn btn-secondary" onclick="reports.close()">✕</button>
+          <h2>Time Reports</h2>
+          <button class="btn btn-secondary" onclick="reports.close()">Close</button>
         </div>
         <div id="reportsContent">
           <!-- Reports content will be loaded here -->
@@ -184,7 +184,6 @@
     </div>
   </div>
 
-  <!-- Single Script File -->
   <script src="script.js"></script>
 </body>
 </html>
