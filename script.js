@@ -42,9 +42,20 @@ const Utils = {
   },
 
   formatDurationHours(milliseconds) {
-    if (!milliseconds || milliseconds < 0) return '0h';
-    const hours = milliseconds / (1000 * 60 * 60);
-    return hours < 1 ? `${Math.round(hours * 60)}m` : `${hours.toFixed(1)}h`;
+    if (!milliseconds || milliseconds < 0) return '0s';
+    
+    const totalSeconds = Math.floor(milliseconds / 1000);
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+    
+    if (hours > 0) {
+      return minutes > 0 ? `${hours}h ${minutes}m` : `${hours}h`;
+    } else if (minutes > 0) {
+      return seconds > 0 ? `${minutes}m ${seconds}s` : `${minutes}m`;
+    } else {
+      return `${seconds}s`;
+    }
   },
 
   showNotification(message, type = 'info') {
@@ -237,7 +248,7 @@ const auth = {
   }
 };
 
-// Timer Module
+// Timer Module - Fixed version
 const timer = {
   start() {
     const projectSelect = document.getElementById('projectSelect');
@@ -260,6 +271,7 @@ const timer = {
     startTime = new Date();
     isRunning = true;
     isPaused = false;
+    elapsedTime = 0; // Reset elapsed time when starting fresh
     
     currentSession = {
       projectId: selectedProjectId,
@@ -282,6 +294,9 @@ const timer = {
   pause() {
     if (!isRunning || isPaused) return;
     
+    // Capture the current elapsed time before pausing
+    elapsedTime = new Date() - new Date(currentSession.startTime);
+    
     isPaused = true;
     clearInterval(timerInterval);
     this.updateButtons();
@@ -291,6 +306,12 @@ const timer = {
 
   resume() {
     if (!isRunning || !isPaused) return;
+    
+    // Update the start time to account for paused time
+    // New start time = current time - elapsed time before pause
+    const now = new Date();
+    startTime = new Date(now - elapsedTime);
+    currentSession.startTime = startTime.toISOString();
     
     isPaused = false;
     timerInterval = setInterval(() => this.updateDisplay(), CONFIG.TIMER.UPDATE_INTERVAL);
@@ -303,7 +324,8 @@ const timer = {
     if (!isRunning) return;
 
     const endTime = new Date();
-    const duration = endTime - new Date(currentSession.startTime);
+    // Use the current elapsed time if paused, otherwise calculate from start time
+    const duration = isPaused ? elapsedTime : (endTime - new Date(currentSession.startTime));
 
     const timeEntry = {
       id: Utils.generateId(),
@@ -358,6 +380,7 @@ const timer = {
     if (isRunning && !isPaused) {
       elapsedTime = new Date() - new Date(currentSession.startTime);
     }
+    // If paused, elapsedTime retains its last value from when pause() was called
 
     display.textContent = Utils.formatDuration(elapsedTime);
   },
