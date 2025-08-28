@@ -12,11 +12,11 @@ const CONFIG = {
     MIN_SESSION_TIME: 60000
   },
   MESSAGES: {
-    LOGIN_SUCCESS: '🎉 Welcome back to your Focus Vault!',
-    REGISTER_SUCCESS: '✅ Vault created successfully! Please sign in.',
-    PROJECT_CREATED: '🎯 Mission added to your vault!',
-    SESSION_STARTED: '🚀 Focus session initiated!',
-    SESSION_STOPPED: '⏹️ Session completed and logged!'
+    LOGIN_SUCCESS: 'Welcome back to your Focus Vault!',
+    REGISTER_SUCCESS: 'Vault created successfully! Please sign in.',
+    PROJECT_CREATED: 'Mission added to your vault!',
+    SESSION_STARTED: 'Focus session initiated!',
+    SESSION_STOPPED: 'Session completed and logged!'
   }
 };
 
@@ -172,7 +172,7 @@ const auth = {
     console.log('Login attempt:', email, password); // Debug log
 
     if (!email || !password) {
-      Utils.showNotification('🔑 Please enter both email and password');
+      Utils.showNotification('Please enter both email and password');
       return;
     }
 
@@ -180,7 +180,7 @@ const auth = {
     console.log('Available users:', users); // Debug log
     
     if (!users[email] || users[email].password !== password) {
-      Utils.showNotification('🚫 Invalid credentials. Access denied.');
+      Utils.showNotification('Invalid credentials. Access denied.');
       return;
     }
 
@@ -196,14 +196,14 @@ const auth = {
     const password = document.getElementById('registerPassword').value;
 
     if (!name || !email || !password) {
-      Utils.showNotification('📝 Please fill in all fields');
+      Utils.showNotification('Please fill in all fields');
       return;
     }
 
     const users = Utils.storage.get(CONFIG.STORAGE_KEYS.USERS, {});
     
     if (users[email]) {
-      Utils.showNotification('⚠️ A vault with this email already exists');
+      Utils.showNotification('A vault with this email already exists');
       return;
     }
 
@@ -224,7 +224,7 @@ const auth = {
 
   logout() {
     if (isRunning) {
-      const confirmLogout = confirm('🛡️ You have an active focus session. Are you sure you want to exit?');
+      const confirmLogout = confirm('You have an active focus session. Are you sure you want to exit?');
       if (!confirmLogout) return;
       
       timer.stop();
@@ -233,7 +233,7 @@ const auth = {
     currentUser = null;
     Utils.storage.set(CONFIG.STORAGE_KEYS.CURRENT_USER, null);
     this.showLogin();
-    Utils.showNotification('👋 Vault secured. See you next time!');
+    Utils.showNotification('Vault secured. See you next time!');
   },
 
   showMainApp() {
@@ -258,13 +258,13 @@ const timer = {
     const task = taskDescription.value.trim();
 
     if (!selectedProjectId) {
-      Utils.showNotification('🎯 Please select a mission first');
+      Utils.showNotification('Please select a mission first');
       return;
     }
 
     const project = currentUser.projects.find(p => p.id === selectedProjectId);
     if (!project) {
-      Utils.showNotification('❌ Selected project not found');
+      Utils.showNotification('Selected project not found');
       return;
     }
 
@@ -301,7 +301,7 @@ const timer = {
     clearInterval(timerInterval);
     this.updateButtons();
     
-    Utils.showNotification('⏸️ Session paused');
+    Utils.showNotification('Session paused');
   },
 
   resume() {
@@ -317,7 +317,7 @@ const timer = {
     timerInterval = setInterval(() => this.updateDisplay(), CONFIG.TIMER.UPDATE_INTERVAL);
     this.updateButtons();
     
-    Utils.showNotification('▶️ Session resumed');
+    Utils.showNotification('Session resumed');
   },
 
   stop() {
@@ -353,7 +353,7 @@ const timer = {
     stats.updateAll();
 
     const durationStr = Utils.formatDuration(duration);
-    Utils.showNotification(`🎉 Session complete! ${durationStr} logged for ${currentSession.projectName}`);
+    Utils.showNotification(`Session complete! ${durationStr} logged for ${currentSession.projectName}`);
   },
 
   reset() {
@@ -395,11 +395,11 @@ const timer = {
       stopBtn.disabled = false;
       
       if (isPaused) {
-        pauseBtn.textContent = '▶️ Resume';
+        pauseBtn.textContent = 'Resume';
         pauseBtn.disabled = false;
         pauseBtn.onclick = () => this.resume();
       } else {
-        pauseBtn.textContent = '⏸️ Pause';
+        pauseBtn.textContent = 'Pause';
         pauseBtn.disabled = false;
         pauseBtn.onclick = () => this.pause();
       }
@@ -407,7 +407,7 @@ const timer = {
       startBtn.disabled = false;
       stopBtn.disabled = true;
       pauseBtn.disabled = true;
-      pauseBtn.textContent = '⏸️ Pause';
+      pauseBtn.textContent = 'Pause';
     }
   },
 
@@ -440,7 +440,7 @@ const projects = {
     const color = document.getElementById('projectColor').value;
 
     if (!name) {
-      Utils.showNotification('🎯 Please enter a mission name');
+      Utils.showNotification('Please enter a mission name');
       return;
     }
 
@@ -494,7 +494,7 @@ const projects = {
       projectDiv.className = 'project-item';
       projectDiv.innerHTML = `
         <div class="project-info">
-          <div class="project-name">🎯 ${project.name}</div>
+          <div class="project-name">${project.name}</div>
           ${project.description ? `<div class="project-description">${project.description}</div>` : ''}
           <div class="project-stats">
             Total: ${Utils.formatDurationHours(project.totalTime || 0)}
@@ -535,11 +535,11 @@ const entries = {
       
       entryDiv.innerHTML = `
         <div class="entry-info">
-          <h4>🎯 ${entry.projectName}</h4>
+          <h4>${entry.projectName}</h4>
           ${entry.task ? `<div class="entry-task">${entry.task}</div>` : ''}
           <div class="entry-meta">
-            <span>📅 ${formattedDate}</span>
-            <span>🕐 ${formattedTime}</span>
+            <span>${formattedDate}</span>
+            <span>${formattedTime}</span>
           </div>
         </div>
         <div class="entry-duration">
@@ -638,12 +638,12 @@ const reports = {
 
 // Initialize app when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('🚀 Initializing Focus Vault...');
+  console.log('Initializing Focus Vault...');
   
   auth.init();
   timer.updateDisplay();
   
-  console.log('✅ Focus Vault initialized successfully');
+  console.log('Focus Vault initialized successfully');
 });
 
 // Make functions available globally for HTML onclick handlers
@@ -653,3 +653,4 @@ window.projects = projects;
 window.entries = entries;
 window.stats = stats;
 window.reports = reports;
+
